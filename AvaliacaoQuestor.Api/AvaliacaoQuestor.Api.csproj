@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AvaliacaoQuestor.Business\AvaliacaoQuestor.Business.csproj" />
-    <ProjectReference Include="..\AvaliacaoQuestor.Data\AvaliacaoQuestor.Infra.csproj" />
+    <ProjectReference Include="..\AvaliacaoQuestor.Infra\AvaliacaoQuestor.Infra.csproj" />
   </ItemGroup>
 
 </Project>

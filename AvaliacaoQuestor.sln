@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaliacaoQuestor.Api", "AvaliacaoQuestor.Api\AvaliacaoQuestor.Api.csproj", "{EFC1D602-BDFD-4AA0-A73B-2C9670F26AAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaliacaoQuestor.Infra", "AvaliacaoQuestor.Data\AvaliacaoQuestor.Infra.csproj", "{192AA0CC-D55D-4DAB-8F36-10E5EDE60A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaliacaoQuestor.Infra", "AvaliacaoQuestor.Infra\AvaliacaoQuestor.Infra.csproj", "{192AA0CC-D55D-4DAB-8F36-10E5EDE60A46}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaliacaoQuestor.Domain", "AvaliacaoQuestor.Domain\AvaliacaoQuestor.Domain.csproj", "{39F9C7FC-1AF6-425B-AD49-EE6FD2459689}"
 EndProject
