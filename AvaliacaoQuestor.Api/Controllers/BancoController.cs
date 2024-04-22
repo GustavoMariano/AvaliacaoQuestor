@@ -1,4 +1,6 @@
-﻿using AvaliacaoQuestor.Business.Features;
+﻿using AutoMapper;
+using AvaliacaoQuestor.Api.DTO;
+using AvaliacaoQuestor.Business.Features;
 using AvaliacaoQuestor.Domain.Features;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +12,13 @@ namespace AvaliacaoQuestor.Api.Controllers;
 [ApiController]
 public class BancoController : ControllerBase
 {
-    private BancosBLL _bll;
+    private readonly BancosBLL _bll;
+    private readonly IMapper _mapper;
 
-    public BancoController(BancosBLL bll)
+    public BancoController(BancosBLL bll, IMapper mapper)
     {
         _bll = bll ?? throw new ArgumentNullException(nameof(bll));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     /// <summary>
@@ -23,9 +27,9 @@ public class BancoController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [Route("CadastrarBanco")]
-    public async Task CadastrarBanco([FromBody] Bancos banco)
+    public async Task CadastrarBanco([FromBody] BancosDTO bancoDTO)
     {
-        await _bll.InserirNovo(banco);
+        await _bll.InserirNovo(_mapper.Map<Bancos>(bancoDTO));
     }
 
     /// <summary>
@@ -36,7 +40,7 @@ public class BancoController : ControllerBase
     [Route("BuscarTodosBancos")]
     public IActionResult BuscarTodosBancos()
     {
-        return Ok(_bll.SelecionarTodos());
+        return Ok(_mapper.Map<List<BancosDTO>>(_bll.SelecionarTodos()));
     }
 
     /// <summary>
@@ -47,6 +51,10 @@ public class BancoController : ControllerBase
     [Route("BuscarBancoPorCodigo")]
     public IActionResult BuscarBancoPorCodigoBanco(int codigoBanco)
     {
-        return Ok(_bll.SelecionarUmRegistro(codigoBanco));
+        var banco = _bll.SelecionarUmRegistro(codigoBanco);
+        if (banco == null)
+            return NotFound();
+
+        return Ok(_mapper.Map<BancosDTO>(banco));
     }
 }

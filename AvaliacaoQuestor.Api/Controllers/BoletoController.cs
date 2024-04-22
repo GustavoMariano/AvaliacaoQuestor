@@ -1,4 +1,6 @@
-﻿using AvaliacaoQuestor.Business.Features;
+﻿using AutoMapper;
+using AvaliacaoQuestor.Api.DTO;
+using AvaliacaoQuestor.Business.Features;
 using AvaliacaoQuestor.Domain.Features;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +13,12 @@ namespace AvaliacaoQuestor.Api.Controllers;
 public class BoletoController : ControllerBase
 {
     private BoletosBLL _bll;
+    private readonly IMapper _mapper;
 
-    public BoletoController(BoletosBLL bll)
+    public BoletoController(BoletosBLL bll, IMapper mapper)
     {
         _bll = bll ?? throw new ArgumentNullException(nameof(bll));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     /// <summary>
@@ -23,20 +27,23 @@ public class BoletoController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [Route("CadastrarBoleto")]
-    public async Task CadastrarBoleto([FromBody] Boletos boleto)
+    public async Task CadastrarBoleto([FromBody] BoletosDTO boletoDTO)
     {
-        await _bll.InserirNovo(boleto);
+        await _bll.InserirNovo(_mapper.Map<Boletos>(boletoDTO));
     }
 
     /// <summary>
     /// Busca um boleto no banco de dados que corresponda ao ID informado
     /// </summary>
-    /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
     [Route("BuscarBoletoPorId")]
     public IActionResult BuscarBoletoPorId(int id)
     {
-        return Ok(_bll.SelecionarUmRegistro(id));
+        var boleto = _bll.SelecionarUmRegistro(id);
+        if(boleto == null)
+            return NotFound();
+
+        return Ok(_mapper.Map<BoletosDTO>(boleto));
     }
 }

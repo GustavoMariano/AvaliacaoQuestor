@@ -1,3 +1,4 @@
+using AvaliacaoQuestor.Api.Configurations;
 using AvaliacaoQuestor.Business.Features;
 using AvaliacaoQuestor.Domain.Features;
 using AvaliacaoQuestor.Domain.Shared;
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("Postgresql");
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddDbContext<AvaliacaoQuestorDBContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddScoped<AvaliacaoQuestorDBContext>();
