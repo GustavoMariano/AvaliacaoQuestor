@@ -20,14 +20,16 @@ public class BoletosBLL : BusinessBase<Boletos>
         if (registro.Validar())
             return _boletosRepository.InserirNovo(registro);
 
-        throw new NotImplementedException();
+        throw new NotImplementedException("Erro na validação");
     }
 
     public override Boletos SelecionarUmRegistro(int id)
     {
         var boleto = _boletosRepository.SelecionarUmRegistro(id);
         var banco = _bancosRepository.SelecionarUmRegistro(boleto.BancoId);
-        boleto.CalcularJuros(banco.PercentualJuros);
+
+        if (DateTime.Now > boleto.DataVencimento)
+            boleto.CalcularJuros(banco.PercentualJuros);
 
         return boleto;
     }
